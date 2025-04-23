@@ -11,30 +11,40 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
-import environ
 from pathlib import Path
 
-# Definir BASE_DIR antes de usarlo
+
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-# Configuración de entorno
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# Base de datos
-DATABASES = {
-    'default': env.db(),  # Lee DATABASE_URL directamente desde .env
-}
 
-# Seguridad y claves
-SECRET_KEY = 'django-insecure-=6r82(#x54*ettq7=4tuz^qj_ehdbi)u0j%zqq(tctrsn7z#+^'
+# import environ
+# env = environ.Env()
+# environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# Debug
+
+
+
+
+
+SECRET_KEY = 'clavesupersecreta'  # Cambia esto a una clave secreta única y segura en producción
+
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Aplicaciones instaladas
+DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fichamedica',
+        'USER': 'postgres',
+        'PASSWORD': 'R1o2c1k10',
+        'HOST': 'localhost',  
+        'PORT': '5432',
+    }
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,10 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Ficha',  #App
+    'Ficha', 
 ]
 
-# Middleware
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,10 +66,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# URLs raíz
+
 ROOT_URLCONF = 'FichaMedica.urls'
 
-# Plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -77,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'FichaMedica.wsgi.application'
 
-# Validadores de contraseñas
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -93,13 +101,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internacionalización
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Archivos estáticos
+
 TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR, 'Ficha', 'templates')]
 
 STATIC_URL = '/static/'
@@ -107,7 +114,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'Ficha', 'static'),
 ]
 
-# Campo primario por defecto
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
